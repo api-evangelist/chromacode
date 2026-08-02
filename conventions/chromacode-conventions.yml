@@ -1,0 +1,100 @@
+generated: '2026-08-02'
+method: probed
+source: >-
+  Anonymous HTTP probes of https://chromacodecloud.com/api/* plus the ChromaCode
+  Cloud runtime config and the Keycloak OIDC discovery documents.
+note: >-
+  ChromaCode publishes no API documentation, so nothing here is quoted from a
+  provider guide. Every field is either observed on the wire or read from a
+  publicly served machine-readable document. Fields that could not be observed
+  anonymously are recorded as unknown rather than guessed.
+authentication:
+  style: oauth2-bearer
+  identity_provider: Keycloak (openid.chromacodecloud.com)
+  browser_flow: authorization_code + PKCE (S256), check-sso on load
+  machine_flow: client_credentials with the chromacloud:service_account scope
+  header: 'Authorization: Bearer <access_token>'
+  anonymous_behavior: HTTP 401 with a JSON authorization envelope on every /api path
+  detail: authentication/chromacode-authentication.yml
+idempotency:
+  supported: unknown
+  evidence: >-
+    No idempotency key header, parameter, or documentation was observed. The upload
+    surface is a three-call initialize / update / finalize protocol which implies a
+    resumable, restartable upload but is not a documented idempotency contract.
+  note: No Idempotency pointer is emitted for this provider — there is no evidence of
+    an idempotency contract.
+pagination:
+  style: unknown
+  evidence: The collection endpoints (/api/analyses, /api/assays, /api/search) are
+    auth-gated, so no pagination envelope could be observed anonymously.
+error_envelope:
+  format: custom
+  media_type: application/json
+  shape: '{"message": string, "error": {"name": string, "message": string}}'
+  problem_json: false
+  observed_example: '{"message":"Authorization not present on request.","error":{"name":"UnauthorizedError"}}'
+  detail: errors/chromacode-problem-types.yml
+versioning:
+  style: product-release
+  current: 6.1.0
+  in_path: false
+  in_header: false
+  public_version_endpoint: https://chromacodecloud.com/version
+  detail: lifecycle/chromacode-lifecycle.yml
+rate_limits:
+  documented: false
+  headers_observed: []
+request_tracing:
+  request_id_header: unknown
+  telemetry: New Relic browser agent (NREUM) is loaded by the ChromaCode Cloud SPA
+    with distributed tracing enabled and cookies disabled.
+cors:
+  enabled: true
+  evidence: 'enableCors: true in https://chromacodecloud.com/config'
+transport:
+  base_url: https://chromacodecloud.com/api
+  tls_version_observed: TLSv1.2
+  hsts: false
+  ssl_required: external
+observed_resources:
+- /api/analyses
+- /api/app-event
+- /api/assay/downloads
+- /api/assays
+- /api/auditLog/configuration
+- /api/batch/reanalyze
+- /api/batch/report
+- /api/batch/reports
+- /api/configuration/instrumentInfos/all
+- /api/configuration/instrumentInfos/supported
+- /api/configuration/siteBanners
+- /api/document/downloads/eula
+- /api/document/downloads/privacy-policy
+- /api/document/downloads/release-notes
+- /api/document/downloads/user-guide
+- /api/equalization-job
+- /api/instrument
+- /api/search
+- /api/upload
+- /api/upload/finalize
+- /api/upload/initialize
+- /api/upload/update
+observed_resources_source: >-
+  String constants in the public ChromaCode Cloud front-end bundle
+  (https://chromacodecloud.com/bundle.js?6.1.0). These are the paths the browser app
+  calls; they are recorded as an observed surface, not as an API contract. No request
+  or response schemas are published and none are inferred here.
+cross_links:
+  authentication: authentication/chromacode-authentication.yml
+  scopes: scopes/chromacode-scopes.yml
+  errors: errors/chromacode-problem-types.yml
+  lifecycle: lifecycle/chromacode-lifecycle.yml
+  conformance: conformance/chromacode-conformance.yml
+x-evidence:
+  fetched: '2026-08-02'
+  urls:
+  - https://chromacodecloud.com/api/instrument
+  - https://chromacodecloud.com/config
+  - https://chromacodecloud.com/version
+  - https://chromacodecloud.com/bundle.js?6.1.0

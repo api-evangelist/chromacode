@@ -1,0 +1,123 @@
+generated: '2026-08-02'
+method: searched
+source: >-
+  https://www.chromacode.com/chromacode-cloud/ and
+  https://openid.chromacodecloud.com/auth/realms/apps/.well-known/openid-configuration
+note: >-
+  Two kinds of claim are recorded here. The regulatory/compliance entries are
+  ChromaCode's own published statement on chromacode.com ("compliant with industry
+  standards such as HIPAA, HITRUST, and ISO 13485 certified" and "Broad regulatory
+  compliance (HIPAA, HITRUST, ISO 13485, GDPR)"); ChromaCode publishes no trust
+  center, audit report, or certificate number, so these are recorded as vendor-asserted
+  and unverified. The protocol entries are mechanically verifiable from the provider's
+  own OpenID Connect discovery documents.
+standards:
+- id: openid-connect-discovery-1.0
+  conforms: true
+  evidence: >-
+    Two RFC 8414 / OIDC Discovery 1.0 metadata documents served publicly at
+    /auth/realms/{apps,cloud}/.well-known/openid-configuration, HTTP 200
+    application/json, with issuer, jwks_uri and the full endpoint set.
+  verified: true
+- id: oauth2
+  conforms: true
+  evidence: >-
+    grant_types_supported includes authorization_code, implicit, refresh_token,
+    password and client_credentials.
+  verified: true
+- id: rfc7636-pkce
+  conforms: true
+  evidence: code_challenge_methods_supported = [plain, S256]; the browser client
+    performs authorization_code with PKCE.
+  verified: true
+- id: rfc9126-pushed-authorization-requests
+  conforms: true
+  evidence: pushed_authorization_request_endpoint advertised (require_pushed_authorization_requests
+    is false).
+  verified: true
+- id: rfc8628-device-authorization-grant
+  conforms: true
+  evidence: device_authorization_endpoint advertised; urn:ietf:params:oauth:grant-type:device_code
+    in grant_types_supported.
+  verified: true
+- id: rfc7009-token-revocation
+  conforms: true
+  evidence: revocation_endpoint advertised.
+  verified: true
+- id: rfc7662-token-introspection
+  conforms: true
+  evidence: introspection_endpoint advertised with five client auth methods.
+  verified: true
+- id: rfc7591-dynamic-client-registration
+  conforms: true
+  evidence: registration_endpoint advertised at /clients-registrations/openid-connect.
+  verified: true
+- id: rfc8705-mtls-client-auth
+  conforms: true
+  evidence: tls_client_auth in token_endpoint_auth_methods_supported;
+    tls_client_certificate_bound_access_tokens is true; mtls_endpoint_aliases present.
+  verified: true
+- id: openid-ciba-core-1.0
+  conforms: true
+  evidence: backchannel_authentication_endpoint advertised; urn:openid:params:grant-type:ciba
+    in grant_types_supported.
+  verified: true
+- id: openid-backchannel-logout-1.0
+  conforms: true
+  evidence: backchannel_logout_supported and frontchannel_logout_supported are true.
+  verified: true
+- id: hipaa
+  conforms: true
+  evidence: >-
+    Vendor claim on https://www.chromacode.com/chromacode-cloud/ — "compliant with
+    industry standards such as HIPAA, HITRUST, and ISO 13485 certified"; ChromaCode
+    Cloud is also described as not storing protected health information.
+  verified: false
+  claim_type: vendor-asserted
+- id: hitrust
+  conforms: true
+  evidence: Vendor claim on https://www.chromacode.com/chromacode-cloud/; no certification
+    number or audit report published.
+  verified: false
+  claim_type: vendor-asserted
+- id: iso-13485
+  conforms: true
+  evidence: >-
+    Vendor claim ("ISO 13485 certified") on https://www.chromacode.com/chromacode-cloud/
+    and on the ChromaCode homepage; the quality-management standard for medical devices.
+  verified: false
+  claim_type: vendor-asserted
+- id: gdpr
+  conforms: true
+  evidence: Vendor claim in the homepage "Broad regulatory compliance (HIPAA, HITRUST,
+    ISO 13485, GDPR)" statement.
+  verified: false
+  claim_type: vendor-asserted
+- id: fda-eua
+  conforms: true
+  evidence: >-
+    FDA Emergency Use Authorization issued for the HDPCR SARS-CoV-2 Real-Time PCR
+    Assay (2020, later expanded) — historical, COVID-era authorization.
+  verified: false
+  claim_type: vendor-asserted
+  historical: true
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: Observed error bodies on https://chromacodecloud.com/api/* use a bespoke
+    {message, error:{name, message}} envelope, not application/problem+json.
+  verified: true
+- id: openapi
+  conforms: false
+  evidence: No OpenAPI or Swagger definition published on any ChromaCode host after
+    probing the marketing host, the ChromaCode Cloud SPA host and the identity host.
+  verified: true
+- id: soc-2
+  conforms: false
+  evidence: No SOC 2 claim found on any ChromaCode public page; no trust center exists.
+  verified: true
+- id: clia-cap
+  conforms: false
+  evidence: No CLIA or CAP laboratory accreditation claim found on ChromaCode's public
+    pages; ChromaCode sells assays and software to laboratories rather than operating
+    one.
+  verified: true

@@ -1,0 +1,56 @@
+generated: '2026-08-02'
+method: probed
+source: Anonymous HTTP probes of https://chromacodecloud.com/api/* on 2026-08-02
+format: custom
+media_type: application/json
+envelope:
+  message: Human-readable top-level message.
+  error:
+    name: Error class name emitted by the Node/Express middleware.
+    message: Repeat of the human-readable message.
+rfc9457: false
+note: >-
+  ChromaCode publishes no error reference. Only the errors observable without
+  credentials are recorded; the authenticated 4xx/5xx surface cannot be enumerated
+  and is deliberately left empty rather than guessed. There is no OpenAPI to derive
+  from.
+problems:
+- status: 401
+  name: UnauthorizedError
+  title: Authorization not present on request.
+  description: Returned by every /api path when no Authorization bearer token is
+    presented. Access requires a Keycloak-issued access token.
+  media_type: application/json
+  observed_body: '{"message":"Authorization not present on request.","error":{"name":"UnauthorizedError"}}'
+  observed_at:
+  - https://chromacodecloud.com/api/instrument
+  - https://chromacodecloud.com/api/configuration/siteBanners
+  - https://chromacodecloud.com/api/document/downloads/eula
+  remediation: >-
+    Obtain an access token from the Keycloak "apps" realm and send it in the
+    Authorization header as a bearer token.
+- status: 500
+  name: Error
+  title: secret option required for sessions
+  description: >-
+    Returned as an HTML Express error page on unmatched /api/* paths (for example
+    /api/config, /api/version, /api/health). The session middleware throws before the
+    router can produce a 404, so an unknown path surfaces as a 500 with a stack-trace
+    page rather than a JSON 404. This is a real observed defect in error handling and
+    an information-disclosure concern (internal file paths are echoed).
+  media_type: text/html
+  observed_at:
+  - https://chromacodecloud.com/api/config
+  - https://chromacodecloud.com/api/version
+  - https://chromacodecloud.com/api/health
+  remediation: Provider-side — return a JSON 404 for unknown API paths and suppress
+    stack traces in production responses.
+  severity: finding
+authenticated_surface:
+  enumerated: false
+  reason: Every /api path is gated; no credentials are held and none were sought.
+x-evidence:
+  fetched: '2026-08-02'
+  http_status_observed:
+  - 401
+  - 500

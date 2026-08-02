@@ -1,0 +1,99 @@
+generated: '2026-08-02'
+method: probed
+source: live HTTP probes of every ChromaCode host on 2026-08-02
+notes: >-
+  The ChromaCode Cloud front end (chromacodecloud.com, production.chromacodecloud.com)
+  is a single-page application whose catch-all route answers HTTP 200 with the SPA
+  HTML shell for every unmatched path, including every /.well-known/* path. Those
+  200s are NOT discovery documents and are recorded here as spa-catchall so a later
+  round does not mistake them for hits. The only real machine-readable discovery
+  documents ChromaCode serves are the two Keycloak OpenID Connect realm metadata
+  documents on openid.chromacodecloud.com, saved verbatim alongside this index.
+hosts:
+- host: https://www.chromacode.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+  - path: /llms.txt
+    status: 404
+  - path: /robots.txt
+    status: 200
+    content_type: text/plain
+- host: https://chromacodecloud.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 200
+    result: spa-catchall
+    content_type: text/html
+  - path: /.well-known/openid-configuration
+    status: 200
+    result: spa-catchall
+    content_type: text/html
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    result: spa-catchall
+    content_type: text/html
+  - path: /.well-known/api-catalog
+    status: 200
+    result: spa-catchall
+    content_type: text/html
+  - path: /.well-known/ai-plugin.json
+    status: 200
+    result: spa-catchall
+    content_type: text/html
+  - path: /.well-known/agent-card.json
+    status: 200
+    result: spa-catchall
+    content_type: text/html
+  - path: /.well-known/agent.json
+    status: 200
+    result: spa-catchall
+    content_type: text/html
+  - path: /config
+    status: 200
+    content_type: application/json
+    result: keycloak-public-client-config
+    note: >-
+      Unauthenticated runtime config for the browser app; declares the public
+      Keycloak client (public client, check-sso, realm "apps", user realm "cloud")
+      and the identity provider base URL https://openid.chromacodecloud.com/auth.
+      No secrets are exposed.
+  - path: /version
+    status: 200
+    content_type: application/json
+    result: platform-version
+    note: 'Returns {"analysisWeb":"6.1.0","chromaCodeCloud":{"platformVersion":"6.1.0","isIVD":false,"mode":"RUO"}}'
+- host: https://openid.chromacodecloud.com
+  documents:
+  - path: /auth/realms/apps/.well-known/openid-configuration
+    status: 200
+    content_type: application/json
+    file: chromacode-openid-configuration-apps.json
+  - path: /auth/realms/cloud/.well-known/openid-configuration
+    status: 200
+    content_type: application/json
+    file: chromacode-openid-configuration-cloud.json
+  - path: /auth/realms/apps/.well-known/oauth-authorization-server
+    status: 404
+  - path: /auth/realms/cloud/.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+security_txt: none
+agent_card: none

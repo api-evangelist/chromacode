@@ -1,0 +1,122 @@
+generated: '2026-08-02'
+method: searched
+source: https://openid.chromacodecloud.com/auth/realms/apps/.well-known/openid-configuration
+docs: https://www.chromacode.com/chromacode-cloud/
+note: >-
+  ChromaCode publishes no OpenAPI definition and no developer authentication guide,
+  so this profile is built from the provider's own publicly readable OpenID Connect
+  discovery documents plus the unauthenticated ChromaCode Cloud runtime config at
+  https://chromacodecloud.com/config, and confirmed against the observed HTTP 401
+  responses on every https://chromacodecloud.com/api/* path.
+summary:
+  types:
+  - openIdConnect
+  - oauth2
+  - mutualTLS
+  api_key_in: []
+  oauth2_flows:
+  - authorizationCode
+  - implicit
+  - clientCredentials
+  - password
+  - deviceCode
+  - ciba
+  identity_provider: Keycloak
+  public_api_key_program: false
+schemes:
+- name: ChromaCodeCloudOIDC
+  type: openIdConnect
+  openIdConnectUrl: https://openid.chromacodecloud.com/auth/realms/apps/.well-known/openid-configuration
+  issuer: https://openid.chromacodecloud.com/auth/realms/apps
+  realm: apps
+  description: >-
+    Primary realm used by the ChromaCode Cloud browser application. The public
+    client "production-frontend" performs authorization_code with PKCE (check-sso
+    on load) against this realm, brokered to the "production-idp" identity provider.
+  sources:
+  - well-known/chromacode-openid-configuration-apps.json
+  endpoints:
+    authorization: https://openid.chromacodecloud.com/auth/realms/apps/protocol/openid-connect/auth
+    token: https://openid.chromacodecloud.com/auth/realms/apps/protocol/openid-connect/token
+    userinfo: https://openid.chromacodecloud.com/auth/realms/apps/protocol/openid-connect/userinfo
+    jwks: https://openid.chromacodecloud.com/auth/realms/apps/protocol/openid-connect/certs
+    introspection: https://openid.chromacodecloud.com/auth/realms/apps/protocol/openid-connect/token/introspect
+    revocation: https://openid.chromacodecloud.com/auth/realms/apps/protocol/openid-connect/revoke
+    end_session: https://openid.chromacodecloud.com/auth/realms/apps/protocol/openid-connect/logout
+    registration: https://openid.chromacodecloud.com/auth/realms/apps/clients-registrations/openid-connect
+    device_authorization: https://openid.chromacodecloud.com/auth/realms/apps/protocol/openid-connect/auth/device
+    pushed_authorization_request: https://openid.chromacodecloud.com/auth/realms/apps/protocol/openid-connect/ext/par/request
+    backchannel_authentication: https://openid.chromacodecloud.com/auth/realms/apps/protocol/openid-connect/ext/ciba/auth
+  grant_types:
+  - authorization_code
+  - implicit
+  - refresh_token
+  - password
+  - client_credentials
+  - urn:ietf:params:oauth:grant-type:device_code
+  - urn:openid:params:grant-type:ciba
+  pkce_methods:
+  - plain
+  - S256
+  token_endpoint_auth_methods:
+  - private_key_jwt
+  - client_secret_basic
+  - client_secret_post
+  - tls_client_auth
+  - client_secret_jwt
+  id_token_signing_algs:
+  - RS256
+  - RS384
+  - RS512
+  - PS256
+  - PS384
+  - PS512
+  - ES256
+  - ES384
+  - ES512
+  - HS256
+  - HS384
+  - HS512
+  mtls_bound_access_tokens: true
+  require_pushed_authorization_requests: false
+  backchannel_logout_supported: true
+  frontchannel_logout_supported: true
+- name: ChromaCodeCloudUserRealmOIDC
+  type: openIdConnect
+  openIdConnectUrl: https://openid.chromacodecloud.com/auth/realms/cloud/.well-known/openid-configuration
+  issuer: https://openid.chromacodecloud.com/auth/realms/cloud
+  realm: cloud
+  description: >-
+    Secondary "cloud" user realm referenced as userRealm by the ChromaCode Cloud
+    runtime config. Same Keycloak capability set as the apps realm but without the
+    chromacloud application scopes.
+  sources:
+  - well-known/chromacode-openid-configuration-cloud.json
+  endpoints:
+    authorization: https://openid.chromacodecloud.com/auth/realms/cloud/protocol/openid-connect/auth
+    token: https://openid.chromacodecloud.com/auth/realms/cloud/protocol/openid-connect/token
+    userinfo: https://openid.chromacodecloud.com/auth/realms/cloud/protocol/openid-connect/userinfo
+    jwks: https://openid.chromacodecloud.com/auth/realms/cloud/protocol/openid-connect/certs
+client:
+  id: production-frontend
+  public_client: true
+  on_load: check-sso
+  idp_hint: production-idp
+  redirect_uri: https://production.chromacodecloud.com
+  ssl_required: external
+  verify_token_audience: true
+  source: https://chromacodecloud.com/config
+observed:
+- url: https://chromacodecloud.com/api/instrument
+  status: 401
+  body: '{"message":"Authorization not present on request.","error":{"name":"UnauthorizedError"}}'
+- url: https://chromacodecloud.com/api/configuration/siteBanners
+  status: 401
+  body: '{"message":"Authorization not present on request.","error":{"name":"UnauthorizedError"}}'
+x-evidence:
+  fetched: '2026-08-02'
+  urls:
+  - https://openid.chromacodecloud.com/auth/realms/apps/.well-known/openid-configuration
+  - https://openid.chromacodecloud.com/auth/realms/cloud/.well-known/openid-configuration
+  - https://chromacodecloud.com/config
+  http_status: 200

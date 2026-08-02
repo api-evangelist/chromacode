@@ -1,18 +1,70 @@
 aid: chromacode
 name: ChromaCode
-description: 'ChromaCode is a company surfaced via the API Evangelist harvest backlog (source: secondary-market)
-  and added to the network as a stub for full-pipeline profiling.'
+description: 'ChromaCode, Inc. is a Carlsbad, California molecular diagnostics company
+  that applies digital signal processing and data science to standard PCR chemistry.
+  Its High-Definition PCR (HDPCR) platform multiplexes more than four times the targets
+  of conventional digital PCR on existing qPCR and dPCR instruments, with no new hardware,
+  reagents, or workflow. The chemistry is paired with ChromaCode Cloud, a browser-based
+  analysis platform that decodes raw PCR run files into interpreted variant calls,
+  plate and well-level visualizations, and downloadable PDF reports that can be exported
+  to LIMS and third-party reporting systems. Products span oncology tumor profiling
+  (the HDPCR NSCLC panel), minimal residual disease and disease monitoring, transplant
+  rejection, and previously an FDA EUA high-throughput SARS-CoV-2 assay. ChromaCode
+  Cloud is a closed, customer-authenticated SaaS: it runs a REST API at chromacodecloud.com/api
+  behind a Keycloak OpenID Connect identity provider whose discovery documents are
+  publicly readable, but ChromaCode publishes no developer portal, OpenAPI definition,
+  SDKs, or public API documentation.'
 url: https://raw.githubusercontent.com/api-evangelist/chromacode/refs/heads/main/apis.yml
+image: https://www.chromacode.com/wp-content/uploads/2022/07/CC_logo.png
 x-type: company
 x-source: harvest:secondary-market
-x-tier: stub
-x-tier-reason: harvest
+x-tier: profiled
+x-tier-reason: no-public-api-surface
 specificationVersion: '0.20'
+x-enrichment:
+  date: '2026-08-02'
+  status: enriched
+  artifacts_added: 10
+  pass: local-v1
 created: '2026-08-02'
 modified: '2026-08-02'
 tags:
 - Company
-apis: []
+- Molecular Diagnostics
+- Genomics
+- Oncology
+- PCR
+- Life Sciences
+- Healthcare
+- Bioinformatics
+- Clinical Diagnostics
+- Cloud Software
+apis:
+- aid: chromacode:chromacode-cloud
+  name: ChromaCode Cloud API
+  description: 'The customer-authenticated REST API behind ChromaCode Cloud 6.1, the
+    browser application that decodes HDPCR run files. Observed resource surface includes
+    analyses, assays and assay downloads, batch reanalysis and reporting, instrument
+    and instrument-info configuration, audit-log configuration, site banners, multipart
+    upload initialize/update/finalize, an equalization-job endpoint, search, and document
+    downloads (EULA, privacy policy, release notes, user guide). Every /api path returns
+    HTTP 401 with a JSON authorization envelope when called anonymously; access is
+    gated behind Keycloak OpenID Connect (realms "apps" and "cloud" at openid.chromacodecloud.com).
+    ChromaCode publishes no OpenAPI definition, developer portal, or public reference
+    for this surface — it is a product API for licensed laboratory customers.'
+  humanURL: https://www.chromacode.com/chromacode-cloud/
+  baseURL: https://chromacodecloud.com/api
+  x-access: gated
+  tags:
+  - Molecular Diagnostics
+  - Genomics
+  - Clinical Diagnostics
+  - Cloud Software
+  properties:
+  - type: Login
+    url: https://chromacodecloud.com/
+  - type: Authentication
+    url: authentication/chromacode-authentication.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
@@ -20,4 +72,48 @@ maintainers:
   email: info@apis.io
 common:
 - type: Website
+  url: https://www.chromacode.com/
+- type: Support
+  url: https://www.chromacode.com/contact/
+- type: Login
+  url: https://chromacodecloud.com/
+- type: GitHubOrganization
+  url: https://github.com/ChromaCodeINC
+- type: BlogRSS
+  url: https://www.chromacode.com/feed/
+- type: TermsOfService
+  url: https://www.chromacode.com/terms-of-use/
+- type: PrivacyPolicy
+  url: https://www.chromacode.com/privacy-policy/
+- type: CookiePolicy
+  url: https://www.chromacode.com/cookie-notice/
+- type: Compliance
+  url: https://www.chromacode.com/chromacode-cloud/
+- type: LinkedIn
+  url: https://www.linkedin.com/company/chromacode-inc/
+- type: Twitter
+  url: https://twitter.com/chromacodeinc
+- type: Facebook
+  url: https://www.facebook.com/chromacodeinc/
+- type: SecondaryMarket
   url: https://forgeglobal.com/chromacode_stock/
+- type: WellKnown
+  url: well-known/chromacode-well-known.yml
+- type: OpenIDConnect
+  url: well-known/chromacode-openid-configuration-apps.json
+- type: Authentication
+  url: authentication/chromacode-authentication.yml
+- type: OAuthScopes
+  url: scopes/chromacode-scopes.yml
+- type: Conventions
+  url: conventions/chromacode-conventions.yml
+- type: ErrorCatalog
+  url: errors/chromacode-problem-types.yml
+- type: Lifecycle
+  url: lifecycle/chromacode-lifecycle.yml
+- type: Conformance
+  url: conformance/chromacode-conformance.yml
+- type: DomainSecurity
+  url: security/chromacode-domain-security.yml
+- type: LLMsTxt
+  url: llms/chromacode-llms.txt

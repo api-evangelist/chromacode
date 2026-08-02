@@ -1,0 +1,110 @@
+generated: '2026-08-02'
+method: searched
+source: https://openid.chromacodecloud.com/auth/realms/apps/.well-known/openid-configuration
+note: >-
+  ChromaCode publishes no scopes or permissions reference page. These scopes are the
+  scopes_supported values advertised by the provider's own Keycloak OpenID Connect
+  discovery documents for the two ChromaCode Cloud realms. The two application-specific
+  scopes (chromacloud, chromacloud:service_account) exist only on the "apps" realm;
+  the rest are Keycloak's standard OIDC client scopes. No scope-level documentation
+  is published, so descriptions below are the standard OIDC/Keycloak meanings and are
+  marked as such — none are ChromaCode-authored.
+schemes:
+- name: ChromaCodeCloudOIDC
+  realm: apps
+  source: well-known/chromacode-openid-configuration-apps.json
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://openid.chromacodecloud.com/auth/realms/apps/protocol/openid-connect/auth
+    tokenUrl: https://openid.chromacodecloud.com/auth/realms/apps/protocol/openid-connect/token
+  - flow: clientCredentials
+    tokenUrl: https://openid.chromacodecloud.com/auth/realms/apps/protocol/openid-connect/token
+- name: ChromaCodeCloudUserRealmOIDC
+  realm: cloud
+  source: well-known/chromacode-openid-configuration-cloud.json
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://openid.chromacodecloud.com/auth/realms/cloud/protocol/openid-connect/auth
+    tokenUrl: https://openid.chromacodecloud.com/auth/realms/cloud/protocol/openid-connect/token
+scopes:
+- scope: chromacloud
+  description: ChromaCode Cloud application scope (provider-specific; no published definition).
+  provider_specific: true
+  realms:
+  - apps
+  sources:
+  - well-known/chromacode-openid-configuration-apps.json
+- scope: chromacloud:service_account
+  description: ChromaCode Cloud service-account scope for machine clients (provider-specific;
+    no published definition).
+  provider_specific: true
+  realms:
+  - apps
+  sources:
+  - well-known/chromacode-openid-configuration-apps.json
+- scope: openid
+  description: Standard OIDC scope requesting an ID token.
+  provider_specific: false
+  realms:
+  - apps
+  - cloud
+- scope: profile
+  description: Standard OIDC scope for basic profile claims (name, given_name, family_name,
+    preferred_username).
+  provider_specific: false
+  realms:
+  - apps
+  - cloud
+- scope: email
+  description: Standard OIDC scope for the email and email_verified claims.
+  provider_specific: false
+  realms:
+  - apps
+  - cloud
+- scope: address
+  description: Standard OIDC scope for the address claim.
+  provider_specific: false
+  realms:
+  - apps
+  - cloud
+- scope: phone
+  description: Standard OIDC scope for phone_number and phone_number_verified claims.
+  provider_specific: false
+  realms:
+  - apps
+  - cloud
+- scope: offline_access
+  description: Standard OIDC scope requesting a refresh token usable while the user
+    is offline.
+  provider_specific: false
+  realms:
+  - apps
+  - cloud
+- scope: roles
+  description: Keycloak client scope adding realm and client role mappings to the token.
+  provider_specific: false
+  realms:
+  - apps
+  - cloud
+- scope: web-origins
+  description: Keycloak client scope adding allowed CORS web origins to the token.
+  provider_specific: false
+  realms:
+  - apps
+  - cloud
+- scope: microprofile-jwt
+  description: Keycloak client scope emitting MicroProfile JWT claims (upn, groups).
+  provider_specific: false
+  realms:
+  - apps
+  - cloud
+- scope: acr
+  description: Keycloak client scope carrying the authentication context class reference.
+  provider_specific: false
+  realms:
+  - apps
+  - cloud
+x-evidence:
+  fetched: '2026-08-02'
+  url: https://openid.chromacodecloud.com/auth/realms/apps/.well-known/openid-configuration
+  http_status: 200
