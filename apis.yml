@@ -15,6 +15,17 @@ description: 'ChromaCode, Inc. is a Carlsbad, California molecular diagnostics c
   publicly readable, but ChromaCode publishes no developer portal, OpenAPI definition,
   SDKs, or public API documentation.'
 url: https://raw.githubusercontent.com/api-evangelist/chromacode/refs/heads/main/apis.yml
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: false
+  label: Hosted service · you call their endpoint
+  confidence: medium
+  source:
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 image: https://www.chromacode.com/wp-content/uploads/2022/07/CC_logo.png
 x-type: company
 x-source: harvest:secondary-market
