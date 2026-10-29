@@ -64,30 +64,95 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-ChromaCode, Inc. is a Carlsbad, California molecular diagnostics company. Its High-Definition PCR (HDPCR) chemistry multiplexes more than four times the targets of conventional digital PCR on existing qPCR and dPCR instruments, and ChromaCode Cloud decodes the raw run files into interpreted variant calls and downloadable reports. Products span oncology tumor profiling (the HDPCR NSCLC panel), minimal residual disease and disease monitoring, and transplant rejection.
+ChromaCode, Inc. is a Carlsbad, California molecular diagnostics company that applies digital signal processing and data science to standard PCR chemistry. Its High-Definition PCR (HDPCR) platform multiplexes more than four times the targets of conventional digital PCR on existing qPCR and dPCR instruments, with no new hardware, reagents, or workflow. The chemistry is paired with ChromaCode Cloud, a browser-based analysis platform that decodes raw PCR run files into interpreted variant calls, plate and well-level visualizations, and downloadable PDF reports that can be exported to LIMS and third-party reporting systems. Products span oncology tumor profiling (the HDPCR NSCLC panel), minimal residual disease and disease monitoring, transplant rejection, and previously an FDA EUA high-throughput SARS-CoV-2 assay. ChromaCode Cloud is a closed, customer-authenticated SaaS: it runs a REST API at chromacodecloud.com/api behind a Keycloak OpenID Connect identity provider whose discovery documents are publicly readable, but ChromaCode publishes no developer portal, OpenAPI definition, SDKs, or public API documentation.
 
-- Website: https://www.chromacode.com/
-- ChromaCode Cloud: https://www.chromacode.com/chromacode-cloud/ (application: https://chromacodecloud.com/)
-- GitHub: https://github.com/ChromaCodeINC
-- Secondary-market listing: https://forgeglobal.com/chromacode_stock/
+**Areas:** Company · Molecular Diagnostics · Genomics · Oncology · PCR · Life Sciences · Healthcare · Bioinformatics · Clinical Diagnostics · Cloud Software
 
-## API posture
+## ChromaCode on APIs.io
 
-ChromaCode publishes **no public API**. There is no developer portal, no OpenAPI/Swagger/GraphQL/AsyncAPI definition, no SDKs on any package registry, no MCP server, and no A2A agent card.
+Everything profiled for ChromaCode is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/chromacode/](https://apis.io/providers/chromacode/)** — or go straight to one of the APIs or properties below.
 
-The ChromaCode Cloud product does run a REST API at `https://chromacodecloud.com/api`, but it is gated: every path returns HTTP 401 anonymously, and access is brokered by a Keycloak OpenID Connect identity provider at `openid.chromacodecloud.com`. That identity provider's discovery documents *are* publicly readable, so this repo captures a real, verifiable authentication and scope profile even though no API contract is published.
+### APIs (1)
 
-## Artifacts
+- [ChromaCode Cloud API](https://apis.io/apis/chromacode/chromacode-cloud/) — The customer-authenticated REST API behind ChromaCode Cloud 6.1, the browser application that decodes HDPCR run files. Observed resource surface includes…
 
-| Artifact | What it holds |
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Chromacode Authentication](https://apis.io/security/chromacode/chromacode-authentication/)
+- [Chromacode Domain Security](https://apis.io/security/chromacode/chromacode-domain-security/)
+
+#### OAuth scopes (1)
+
+The permissions the API asks for.
+
+- [Chromacode Scopes](https://apis.io/scopes/chromacode/chromacode-scopes/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://www.chromacode.com/)
+- [Support](https://www.chromacode.com/contact/)
+- [Compliance](https://www.chromacode.com/chromacode-cloud/)
+- [Terms of service](https://www.chromacode.com/terms-of-use/)
+- [Privacy policy](https://www.chromacode.com/privacy-policy/)
+- [GitHub](https://github.com/ChromaCodeINC)
+
+## API Evangelist rating
+
+**Kin Score 24.0** — emerging · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
 |---|---|
-| `apis.yml` | APIs.json 0.20 index — identity, the gated ChromaCode Cloud API entry, and every artifact pointer |
-| `well-known/` | Probe index for every host/path (with statuses) plus the two verbatim Keycloak OIDC discovery documents |
-| `authentication/` | OIDC/OAuth 2.0 profile — flows, endpoints, PKCE, PAR, CIBA, device grant, mTLS-bound tokens |
-| `scopes/` | The `scopes_supported` of both realms, including `chromacloud` and `chromacloud:service_account` |
-| `conventions/` | Observed auth style, error envelope, CORS, transport, and the resource paths the front end calls |
-| `errors/` | The observed 401 authorization envelope, and a 500 error-handling defect on unmatched `/api` paths |
-| `lifecycle/` | Product version 6.1.0, RUO regulatory mode, milestones; no status page, SLA, or deprecation policy |
-| `conformance/` | Verified OAuth/OIDC conformance plus ChromaCode's vendor-asserted HIPAA / HITRUST / ISO 13485 / GDPR claims |
-| `security/` | TLS, HSTS, DNSSEC, CAA, SPF and DMARC posture for both domains |
-| `llms/` | Agent-readable summary of the company and this repo |
+| Discoverability | 73.2 |
+| Contract quality | 0.0 |
+| Contract governance | 18.2 |
+| Operational transparency | 2.6 |
+| Developer ergonomics | 16.7 |
+| Access clarity | 35.5 |
+
+**Agent readiness 18.0** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | — |
+| Agentic Access | — |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | served (partial credit) |
+| Idempotency | — |
+| Error Semantics | documented (partial credit) |
+| OpenAPI Examples | — |
+| Rate Limit Signal | — |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | served (partial credit) |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | yes |
+| Agentic Commerce | — |
+
+**Regulatory alignment 36.7** — Health
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/chromacode/](https://apis.io/providers/chromacode/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for ChromaCode: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/chromacode/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
